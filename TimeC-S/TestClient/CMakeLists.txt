@@ -1,0 +1,41 @@
+cmake_minimum_required(VERSION 3.10)
+
+# 修改项目名称为 Client
+project(TimeC_ClientTest LANGUAGES C CXX)
+
+# Client source (修改为 client.cpp)
+set(CLIENT_SRC ${CMAKE_CURRENT_SOURCE_DIR}/main.cpp)
+
+# Path to project's lib directory (相对路径保持不变，因为目录结构相同)
+set(PROJECT_LIB_DIR ${CMAKE_CURRENT_SOURCE_DIR}/../../lib)
+
+# Add executable (可执行文件名称改为 client)
+add_executable(client ${CLIENT_SRC}
+  # include wrap sources from lib so symbols are available at link time
+  ${PROJECT_LIB_DIR}/wrapsock.c
+  ${PROJECT_LIB_DIR}/wrapunix.c
+  ${PROJECT_LIB_DIR}/error.c
+)
+
+# Include directory so #include "unp.h" works
+target_include_directories(client PRIVATE ${PROJECT_LIB_DIR})
+
+# Set C/C++ standards if needed (client.cpp is C++)
+set_target_properties(client PROPERTIES
+  CXX_STANDARD 17
+  CXX_STANDARD_REQUIRED ON
+  CXX_EXTENSIONS OFF
+)
+
+# Link pthreads (wrapsock/wrapunix may require it)
+find_package(Threads REQUIRED)
+target_link_libraries(client PRIVATE Threads::Threads)
+
+# If you want to place the binary in a specific folder:
+set_target_properties(client PROPERTIES
+  RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/bin
+)
+
+# Helpful messages (更新消息内容)
+message(STATUS "TimeC Client CMake: client source = ${CLIENT_SRC}")
+message(STATUS "TimeC Client CMake: using lib dir = ${PROJECT_LIB_DIR}")
