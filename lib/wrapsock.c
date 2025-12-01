@@ -71,9 +71,9 @@ ssize_t Recv(int sockfd, void *buf, size_t len, int flags)
     if ((n = recv(sockfd, buf, len, flags)) < 0) {
 #ifdef EINTR
         if (errno == EINTR)
-            return Recv(sockfd, buf, len, flags); // 被信号中断则重试
+            return Recv(sockfd, buf, len, flags); 
 #endif
-        err_sys("recv error"); // 其他错误直接终止并打印信息
+        err_sys("recv error"); 
     }
     return n;
 }
