@@ -36,6 +36,7 @@ int Select(int nfds, fd_set *readfds, fd_set *writefds, fd_set *exceptfds, struc
 int Accept(int fd, struct sockaddr *sa, socklen_t *salenptr);
 int Socket(int family, int type, int protocol);
 ssize_t Recv(int sockfd, void *buf, size_t len, int flags);
+ssize_t Send(int sockfd, const void *buf, size_t len, int flags);
 /* end wrapspck.c */
 
 /* wrapunix.c */

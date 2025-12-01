@@ -24,6 +24,7 @@ main(int argc, char **argv)
 		connfd = Accept(listenfd, (SA *) NULL, NULL);
 
         ticks = time(NULL);
+		// ascii string doesn't need htonl()/htons() 
         snprintf(buff, sizeof(buff), "%.24s\r\n", ctime(&ticks));
         Write(connfd, buff, strlen(buff));
 

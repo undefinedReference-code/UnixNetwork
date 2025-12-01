@@ -25,7 +25,7 @@ int main(int argc, char **argv) {
 	Connect(connfd, (SA*)&servaddr, sizeof(servaddr));
 
     
-    while(int n = Recv(connfd, buff, sizeof(buff), NULL)) {
+    while(int n = Recv(connfd, buff, sizeof(buff), 0)) {
         if (n > 0) {
             buff[n] = '\0';
             printf("%s\n", buff);
