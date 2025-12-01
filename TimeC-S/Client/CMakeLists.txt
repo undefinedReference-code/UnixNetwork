@@ -1,15 +1,11 @@
 cmake_minimum_required(VERSION 3.10)
 
-# 修改项目名称为 Client
 project(TimeC_Client LANGUAGES C CXX)
 
-# Client source (修改为 client.cpp)
 set(CLIENT_SRC ${CMAKE_CURRENT_SOURCE_DIR}/client.cpp)
 
-# Path to project's lib directory (相对路径保持不变，因为目录结构相同)
 set(PROJECT_LIB_DIR ${CMAKE_CURRENT_SOURCE_DIR}/../../lib)
 
-# Add executable (可执行文件名称改为 client)
 add_executable(client ${CLIENT_SRC}
   # include wrap sources from lib so symbols are available at link time
   ${PROJECT_LIB_DIR}/wrapsock.c
@@ -36,6 +32,6 @@ set_target_properties(client PROPERTIES
   RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/bin
 )
 
-# Helpful messages (更新消息内容)
+# Helpful messages
 message(STATUS "TimeC Client CMake: client source = ${CLIENT_SRC}")
 message(STATUS "TimeC Client CMake: using lib dir = ${PROJECT_LIB_DIR}")
