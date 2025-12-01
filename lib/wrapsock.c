@@ -77,3 +77,18 @@ ssize_t Recv(int sockfd, void *buf, size_t len, int flags)
     }
     return n;
 }
+
+ssize_t Send(int sockfd, const void *buf, size_t len, int flags)
+{
+    ssize_t n;
+
+again:
+    if ((n = send(sockfd, buf, len, flags)) < 0) {
+#ifdef EINTR
+        if (errno == EINTR)
+            goto again;
+#endif
+        err_sys("send error");
+    }
+    return n;
+}

@@ -33,6 +33,11 @@ int main(int argc, char **argv) {
         string userInput;
         getline(cin, userInput);
 
+        if (userInput == "exit" || userInput == "quit" || userInput == "q") {
+            cout << "exit client..." << endl;
+            break;
+        }
+
         sendLength = Send(connfd, userInput.c_str(), userInput.size(), 0);
 
         while(int n = Recv(connfd, buff, sizeof(buff), 0)) {
