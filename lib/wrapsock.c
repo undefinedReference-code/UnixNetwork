@@ -63,3 +63,17 @@ int Socket(int family, int type, int protocol)
 		err_sys("socket error");
 	return(n);
 }
+
+ssize_t Recv(int sockfd, void *buf, size_t len, int flags)
+{
+    ssize_t n;
+
+    if ((n = recv(sockfd, buf, len, flags)) < 0) {
+#ifdef EINTR
+        if (errno == EINTR)
+            return Recv(sockfd, buf, len, flags); // 被信号中断则重试
+#endif
+        err_sys("recv error"); // 其他错误直接终止并打印信息
+    }
+    return n;
+}
