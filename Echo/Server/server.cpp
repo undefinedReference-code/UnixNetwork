@@ -7,14 +7,13 @@ main(int argc, char **argv)
 	int					listenfd, connfd;
 	struct sockaddr_in	servaddr;
 	char				buff[MAXLINE];
-	time_t				ticks;
 
 	listenfd = Socket(AF_INET, SOCK_STREAM, 0);
 	memset(&servaddr, 0, sizeof(servaddr));
 
 	servaddr.sin_family      = AF_INET;
 	servaddr.sin_addr.s_addr = htonl(INADDR_ANY);
-	servaddr.sin_port        = htons(13);	/* daytime server */
+	servaddr.sin_port        = htons(7);	/* daytime server */
 
 	Bind(listenfd, (SA *) &servaddr, sizeof(servaddr));
 
@@ -23,10 +22,9 @@ main(int argc, char **argv)
 	for ( ; ; ) {
 		connfd = Accept(listenfd, (SA *) NULL, NULL);
 
-        ticks = time(NULL);
-		// ascii string doesn't need htonl()/htons() 
-        snprintf(buff, sizeof(buff), "%.24s\r\n", ctime(&ticks));
-        Write(connfd, buff, strlen(buff));
+        while(int n = Recv(connfd, buff, sizeof(buff), 0)) {
+            Send(connfd, buff, n, 0);
+        }
 
 		Close(connfd);
 	}

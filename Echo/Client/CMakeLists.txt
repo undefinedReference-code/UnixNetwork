@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.10)
 
-project(TimeC_Client LANGUAGES C CXX)
+project(Echo_Client LANGUAGES C CXX)
 
 set(CLIENT_SRC ${CMAKE_CURRENT_SOURCE_DIR}/client.cpp)
 
@@ -31,7 +31,3 @@ target_link_libraries(client PRIVATE Threads::Threads)
 set_target_properties(client PROPERTIES
   RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/bin
 )
-
-# Helpful messages
-message(STATUS "TimeC Client CMake: client source = ${CLIENT_SRC}")
-message(STATUS "TimeC Client CMake: using lib dir = ${PROJECT_LIB_DIR}")
